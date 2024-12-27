@@ -1,7 +1,7 @@
 import CasoDeUso from '../../shared/CasoDeUso'
-import Usuario from '../model/Usuario'
 import ProvedorCriptografia from '../provider/ProvedorCriptografia'
 import RepositorioUsuario from '../provider/RepositorioUsuario'
+import Usuario from '../model/Usuario'
 
 type Entrada = {
   email: string
@@ -20,8 +20,8 @@ export default class LoginUsuario implements CasoDeUso<Entrada, Usuario> {
     const usuario = await this.repo.buscarPorEmail(email)
     if (!usuario) throw new Error('Usuário não encontrado')
 
-    const senhaIgual = await this.cripto.comparar(senha, usuario.senha)
-    if (!senhaIgual) throw new Error('Senha incorreta')
+    const mesmaSenha = await this.cripto.comparar(senha, usuario.senha)
+    if (!mesmaSenha) throw new Error('Senha incorreta')
 
     delete usuario.senha
     return usuario
