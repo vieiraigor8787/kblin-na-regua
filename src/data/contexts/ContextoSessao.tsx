@@ -1,7 +1,7 @@
 'use client'
 import cookie from 'js-cookie'
 
-import { createContext, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
 import { Usuario } from '@kblinnaregua/core'
 
@@ -26,6 +26,23 @@ export function ProvedorSessao(props: any) {
 
   const [carregando, setCarregando] = useState(true)
   const [sessao, setSessao] = useState<Sessao>({ token: null, usuario: null })
+
+  const carregarSessao = useCallback(function () {
+    try {
+      setCarregando(true)
+      const sessao = obterSessao()
+      setSessao(sessao)
+    } finally {
+      setCarregando(false)
+    }
+  }, [])
+
+  useEffect(
+    function () {
+      carregarSessao()
+    },
+    [carregarSessao]
+  )
 
   function iniciarSessao(token: string) {
     cookie.set(nomeCookie, token, { expires: 1 })
