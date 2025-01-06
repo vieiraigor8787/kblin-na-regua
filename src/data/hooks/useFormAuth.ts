@@ -1,5 +1,7 @@
-import { useState } from 'react'
 import useAPI from './useAPI'
+import useSessao from './useSessao'
+
+import { useState } from 'react'
 
 export default function useFormAuth() {
   const [modo, setModo] = useState<'login' | 'cadastro'>('login')
@@ -11,6 +13,7 @@ export default function useFormAuth() {
   const [telefone, setTelefone] = useState('')
 
   const { httpPost } = useAPI()
+  const { iniciarSessao } = useSessao()
 
   function alterarModo() {
     setModo(modo === 'login' ? 'cadastro' : 'login')
@@ -19,7 +22,7 @@ export default function useFormAuth() {
   async function submit() {
     if (modo === 'login') {
       const token = await httpPost('/auth/login', { email, senha })
-      console.log('Token:', token)
+      iniciarSessao(token)
       limparFormulario()
     } else {
       await httpPost('/auth/registrar', { nome, telefone, email, senha })
