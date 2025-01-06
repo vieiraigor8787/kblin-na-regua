@@ -1,4 +1,3 @@
-import profissionais from '@/data/constants/profissionais'
 import {
   IconStar,
   IconStarFilled,

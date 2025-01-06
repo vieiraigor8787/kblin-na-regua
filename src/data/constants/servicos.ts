@@ -1,4 +1,4 @@
-import Servico from '@/core/servico/Servico'
+import { Servico } from '@kblinnaregua/core'
 
 const servicos: Servico[] = [
   {

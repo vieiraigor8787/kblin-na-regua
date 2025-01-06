@@ -1,4 +1,4 @@
-import Profissional from '@/core/profissional/Profissional'
+import { Profissional } from '@kblinnaregua/core'
 
 const profissionais: Profissional[] = [
   {

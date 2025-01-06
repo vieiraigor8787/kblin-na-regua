@@ -24,4 +24,17 @@ body {
     @apply bg-gradient-to-r from-white to-zinc-400;
     @apply bg-clip-text text-transparent;
   }
+
+  .input {
+    @apply bg-zinc-900 px-4 py-2 rounded-lg;
+  }
+
+  .button {
+    @apply bg-zinc-700 text-white px-4 py-2 rounded-lg;
+  }
+
+  .button-outline {
+    @apply rounded-lg px-2 py-4;
+    @apply border border-zinc-600 hover:bg-zinc-700 hover:border-white;
+  }
 }

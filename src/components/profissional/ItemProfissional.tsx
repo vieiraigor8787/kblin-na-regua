@@ -1,4 +1,3 @@
-import Profissional from '@/core/profissional/Profissional'
 import {
   IconBrandInstagram,
   IconBrandLinkedin,
@@ -7,6 +6,7 @@ import {
 } from '@tabler/icons-react'
 import Image from 'next/image'
 import Avaliacao from '../shared/Avaliacao'
+import { Profissional } from '@kblinnaregua/core'
 
 export interface ItemProfissionalProps {
   profissional: Profissional
