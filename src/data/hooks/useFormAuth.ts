@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation'
 import useAPI from './useAPI'
 import useSessao from './useSessao'
 
@@ -14,20 +15,30 @@ export default function useFormAuth() {
 
   const { httpPost } = useAPI()
   const { iniciarSessao } = useSessao()
+  const router = useRouter()
 
   function alterarModo() {
     setModo(modo === 'login' ? 'cadastro' : 'login')
   }
 
+  async function login() {
+    const token = await httpPost('/auth/login', { email, senha })
+    iniciarSessao(token)
+    router.push('/')
+  }
+
+  async function registrar() {
+    await httpPost('/auth/registrar', { nome, telefone, email, senha })
+  }
+
   async function submit() {
     if (modo === 'login') {
-      const token = await httpPost('/auth/login', { email, senha })
-      iniciarSessao(token)
-      limparFormulario()
+      await login()
     } else {
-      await httpPost('/auth/registrar', { nome, telefone, email, senha })
-      limparFormulario()
+      await registrar()
+      await login()
     }
+    limparFormulario()
   }
 
   function limparFormulario() {
