@@ -50,7 +50,10 @@ export function ProvedorSessao(props: any) {
     setSessao(sessao)
   }
 
-  function encerrarSessao() {}
+  function encerrarSessao() {
+    cookie.remove(nomeCookie)
+    setSessao({ token: null, usuario: null })
+  }
 
   function obterSessao(): Sessao {
     const token = cookie.get(nomeCookie)
