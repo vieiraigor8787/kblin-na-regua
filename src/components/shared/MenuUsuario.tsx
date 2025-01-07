@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import Image from 'next/image'
-import { IconHome, IconLogout } from '@tabler/icons-react'
+import { IconCalendar, IconHome, IconLogout } from '@tabler/icons-react'
 import Link from 'next/link'
 
 export default function MenuUsuario() {
@@ -25,14 +25,26 @@ export default function MenuUsuario() {
           </div>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem onClick={encerrarSessao}>
+      <DropdownMenuContent className="bg-black/80 border-none">
+        <DropdownMenuItem
+          onClick={encerrarSessao}
+          className="hover:bg-zinc-800"
+        >
           <Link href="/" className="flex gap-2">
             <IconHome size={18} />
             <span className="cursor-pointer">Home</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator className="" />
+        <DropdownMenuItem
+          onClick={encerrarSessao}
+          className="hover:bg-zinc-800"
+        >
+          <Link href="/agendamento" className="flex gap-2">
+            <IconCalendar size={18} />
+            <span className="cursor-pointer">Agendamento</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator className="bg-zinc-600" />
         <DropdownMenuItem
           onClick={encerrarSessao}
           className="flex gap-2 text-red-500"
