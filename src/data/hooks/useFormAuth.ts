@@ -1,8 +1,8 @@
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import useAPI from './useAPI'
 import useSessao from './useSessao'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function useFormAuth() {
   const [modo, setModo] = useState<'login' | 'cadastro'>('login')
@@ -14,8 +14,17 @@ export default function useFormAuth() {
   const [telefone, setTelefone] = useState('')
 
   const { httpPost } = useAPI()
-  const { iniciarSessao } = useSessao()
+  const { usuario, iniciarSessao } = useSessao()
+
   const router = useRouter()
+  const params = useSearchParams()
+
+  useEffect(() => {
+    if (usuario?.email) {
+      const destino = params.get('destino') as string
+      router.push(destino ? destino : '/')
+    }
+  }, [usuario, router, params])
 
   function alterarModo() {
     setModo(modo === 'login' ? 'cadastro' : 'login')
@@ -24,7 +33,6 @@ export default function useFormAuth() {
   async function login() {
     const token = await httpPost('/auth/login', { email, senha })
     iniciarSessao(token)
-    router.push('/')
   }
 
   async function registrar() {
