@@ -1,4 +1,4 @@
-import servicos from '@/data/constants/servicos'
+import { servicos } from '@kblinnaregua/core'
 
 import ItemServico from './ItemServico'
 import Titulo from '../shared/Titulo'

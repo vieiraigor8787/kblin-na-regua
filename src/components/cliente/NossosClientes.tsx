@@ -1,4 +1,4 @@
-import clientes from '@/data/constants/clientes'
+import { clientes } from '@kblinnaregua/core'
 
 import ItemCliente from './ItemCliente'
 import Titulo from '../shared/Titulo'

@@ -1,4 +1,4 @@
-import profissionais from '@/data/constants/profissionais'
+import { profissionais } from '@kblinnaregua/core'
 
 import ItemProfissional from './ItemProfissional'
 import Titulo from '../shared/Titulo'
