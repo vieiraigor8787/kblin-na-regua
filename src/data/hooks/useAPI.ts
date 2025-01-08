@@ -1,4 +1,8 @@
+import useSessao from './useSessao'
+
 export default function useAPI() {
+  const { token } = useSessao()
+
   const urlBase = 'http://localhost:4000'
 
   async function httpPost(path: string, body: any) {
@@ -9,6 +13,7 @@ export default function useAPI() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     })
@@ -19,7 +24,11 @@ export default function useAPI() {
     const uri = path.startsWith('/') ? path : `/${path}`
     const urlFull = `${urlBase}${uri}`
 
-    const res = await fetch(urlFull)
+    const res = await fetch(urlFull, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return extrairDados(res)
   }
 
