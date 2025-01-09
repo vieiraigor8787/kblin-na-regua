@@ -1,9 +1,11 @@
-import { profissionais } from '@kblinnaregua/core'
+import useProfissionais from '@/data/hooks/useProfissionais'
 
 import ItemProfissional from './ItemProfissional'
 import Titulo from '../shared/Titulo'
 
 export default function NossosProfissionais() {
+  const { profissionais } = useProfissionais()
+
   return (
     <div className="flex flex-col gap-y-16">
       <Titulo

@@ -1,9 +1,12 @@
-import { servicos } from '@kblinnaregua/core'
+'use client'
+import useServicos from '@/data/hooks/useServicos'
 
 import ItemServico from './ItemServico'
 import Titulo from '../shared/Titulo'
 
 export default function NossosServicos() {
+  const { servicos } = useServicos()
+
   return (
     <div className="flex flex-col gap-y-16">
       <Titulo
