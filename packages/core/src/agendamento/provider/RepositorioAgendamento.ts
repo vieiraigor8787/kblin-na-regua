@@ -7,6 +7,6 @@ export default interface RepositorioAgendamento {
   buscarPorProfissionalEData(
     profissional: number,
     data: Date
-  ): Promise<Agendamento[]>
+  ): Promise<Partial<Agendamento[]>>
   excluir(id: number): Promise<void>
 }
