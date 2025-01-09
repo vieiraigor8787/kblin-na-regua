@@ -7,7 +7,7 @@ export default class BuscarAgendamentosCliente
   implements CasoDeUso<Usuario, Agendamento[]>
 {
   constructor(private readonly repo: RepositorioAgendamento) {}
-  async executar(usuario: Usuario): Promise<Agendamento[]> {
-    return await this.repo.buscarPorEmail(usuario.email)
+  executar(usuario: Usuario): Promise<Agendamento[]> {
+    return this.repo.buscarPorEmail(usuario.email)
   }
 }
