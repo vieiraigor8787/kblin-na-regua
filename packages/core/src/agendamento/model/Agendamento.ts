@@ -6,6 +6,6 @@ export default interface Agendamento {
   id: number
   data: Date
   usuario: Usuario
-  profissional: Profissional
-  servicos: Servico[]
+  profissional: Partial<Profissional>
+  servicos: Partial<Servico>[]
 }
