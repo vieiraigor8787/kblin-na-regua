@@ -24,6 +24,8 @@ export default function FormularioAgendamento() {
           'Selecione os serviços',
           'Escolha a data e hora',
         ]}
+        acao={agendar}
+        labelAcao="Agendar"
       >
         <CampoProfissional
           label="Profissional"

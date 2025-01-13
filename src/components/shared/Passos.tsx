@@ -1,11 +1,22 @@
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
+import {
+  IconCheck,
+  IconChevronLeft,
+  IconChevronRight,
+} from '@tabler/icons-react'
 import { useState } from 'react'
 
 export interface PassosProps {
   labels: string[]
   children: any
+  acao?: () => void
+  labelAcao?: string
 }
-export default function Passos({ labels, children }: PassosProps) {
+export default function Passos({
+  labels,
+  children,
+  labelAcao,
+  acao,
+}: PassosProps) {
   const [passoAtual, setPassoAtual] = useState(0)
 
   function semPassoAnterior() {
@@ -62,14 +73,24 @@ export default function Passos({ labels, children }: PassosProps) {
           <IconChevronLeft size={20} />
           <span>Anterior</span>
         </button>
-        <button
-          onClick={proximoPasso}
-          disabled={semProximoPasso()}
-          className={`flex gap-1 items-center button ${semProximoPasso() ? 'cursor-not-allowed opacity-50' : ''}`}
-        >
-          <IconChevronRight size={20} />
-          <span>Próximo</span>
-        </button>
+
+        {acao && semProximoPasso() ? (
+          <button
+            onClick={acao}
+            className={`flex gap-1 items-center button bg-yellow-500 text-black `}
+          >
+            <IconCheck size={20} />
+            <span>{labelAcao ?? 'Finalizar'}</span>
+          </button>
+        ) : (
+          <button
+            onClick={proximoPasso}
+            className={`flex gap-1 items-center button `}
+          >
+            <IconChevronRight size={20} />
+            <span>Próximo</span>
+          </button>
+        )}
       </div>
     </div>
   )
