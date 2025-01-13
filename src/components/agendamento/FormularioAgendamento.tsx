@@ -26,6 +26,7 @@ export default function FormularioAgendamento() {
         ]}
         acao={agendar}
         labelAcao="Agendar"
+        validarPasso={[!!profissional, servicos.length > 0, !!data]}
       >
         <CampoProfissional
           label="Profissional"

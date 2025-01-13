@@ -9,7 +9,7 @@ import useSessao from '../hooks/useSessao'
 export interface ContextoAgendamentoProps {
   profissional: Profissional | null
   servicos: Servico[]
-  data: Date
+  data: Date | null
   selecionarProfissional: (profissional: Profissional | null) => void
   selecionarServicos: (servico: Servico[]) => void
   selecionarData: (data: Date) => void
@@ -24,7 +24,7 @@ export function ProvedorAgendamento(props: any) {
 
   const [profissional, setProfissional] = useState<Profissional | null>(null)
   const [servicos, setServicos] = useState<Servico[]>([])
-  const [data, setData] = useState<Date>(new Date())
+  const [data, setData] = useState<Date | null>(null)
 
   async function agendar() {
     await httpPost('/agendamentos', {

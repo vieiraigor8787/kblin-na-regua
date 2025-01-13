@@ -8,6 +8,7 @@ import { useState } from 'react'
 export interface PassosProps {
   labels: string[]
   children: any
+  validarPasso?: boolean[]
   acao?: () => void
   labelAcao?: string
 }
@@ -16,6 +17,7 @@ export default function Passos({
   children,
   labelAcao,
   acao,
+  validarPasso,
 }: PassosProps) {
   const [passoAtual, setPassoAtual] = useState(0)
 
@@ -60,6 +62,8 @@ export default function Passos({
     )
   }
 
+  const permiteProximoPasso = validarPasso?.[passoAtual] ?? true
+
   return (
     <div className="flex flex-col gap-5">
       <div>{renderizarLabels()}</div>
@@ -77,7 +81,8 @@ export default function Passos({
         {acao && semProximoPasso() ? (
           <button
             onClick={acao}
-            className={`flex gap-1 items-center button bg-yellow-500 text-black `}
+            disabled={!permiteProximoPasso}
+            className={`flex gap-1 items-center button bg-yellow-500 text-black ${!permiteProximoPasso ? 'cursor-not-allowed opacity-50' : ''}  `}
           >
             <IconCheck size={20} />
             <span>{labelAcao ?? 'Finalizar'}</span>
@@ -85,7 +90,8 @@ export default function Passos({
         ) : (
           <button
             onClick={proximoPasso}
-            className={`flex gap-1 items-center button `}
+            disabled={!permiteProximoPasso || semProximoPasso()}
+            className={`flex gap-1 items-center button ${!permiteProximoPasso || semProximoPasso() ? 'cursor-not-allowed opacity-50' : ''}  `}
           >
             <IconChevronRight size={20} />
             <span>Próximo</span>
