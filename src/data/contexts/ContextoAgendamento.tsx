@@ -10,7 +10,7 @@ export interface ContextoAgendamentoProps {
   profissional: Profissional | null
   servicos: Servico[]
   data: Date
-  selecionarProfissional: (profissional: Profissional) => void
+  selecionarProfissional: (profissional: Profissional | null) => void
   selecionarServicos: (servico: Servico[]) => void
   selecionarData: (data: Date) => void
   agendar: () => Promise<void>

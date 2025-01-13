@@ -8,6 +8,14 @@ export interface PassosProps {
 export default function Passos({ labels, children }: PassosProps) {
   const [passoAtual, setPassoAtual] = useState(0)
 
+  function semPassoAnterior() {
+    return passoAtual === 0
+  }
+
+  function semProximoPasso() {
+    return passoAtual === labels.length - 1
+  }
+
   function passoAnterior() {
     if (passoAtual === 0) return
     setPassoAtual(passoAtual - 1)
@@ -42,23 +50,25 @@ export default function Passos({ labels, children }: PassosProps) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <div>{renderizarLabels()}</div>
       <div className="">{children[passoAtual] ?? children}</div>
       <div className="flex gap-3">
         <button
           onClick={passoAnterior}
-          className="flex gap-1 items-center button"
+          disabled={semPassoAnterior()}
+          className={`flex gap-1 items-center button ${semPassoAnterior() ? 'cursor-not-allowed opacity-50' : ''}`}
         >
           <IconChevronLeft size={20} />
           <span>Anterior</span>
         </button>
         <button
           onClick={proximoPasso}
-          className="flex gap-1 items-center button"
+          disabled={semProximoPasso()}
+          className={`flex gap-1 items-center button ${semProximoPasso() ? 'cursor-not-allowed opacity-50' : ''}`}
         >
           <IconChevronRight size={20} />
-          <span>Anterior</span>
+          <span>Próximo</span>
         </button>
       </div>
     </div>
