@@ -26,7 +26,7 @@ function Opcao({
 }: OpcaoProps) {
   return (
     <button
-      className={`flex flex-col items-center border rounded overflow-hidden ${profissionalSelecionado ? 'border-green-400' : 'border-zinc-700'}`}
+      className={`flex flex-col items-center border rounded overflow-hidden select-none ${profissionalSelecionado ? 'border-green-400' : 'border-zinc-700'}`}
       onClick={() => profissionalMudou(profissional)}
     >
       <Image
@@ -45,13 +45,6 @@ function Opcao({
 }
 export default function CampoProfissional(props: CampoProfissionalProps) {
   const { profissionais } = useProfissionais()
-
-  function onChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const id = +e.target.value
-    const prof =
-      profissionais.find((profissional) => profissional.id === id) ?? null
-    props.onChange(prof)
-  }
 
   return profissionais ? (
     <div className="flex flex-col gap-5">
