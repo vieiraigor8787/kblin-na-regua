@@ -1,21 +1,32 @@
+'use client'
 import { AgendaUtils } from '@kblinnaregua/core'
+import { useState } from 'react'
 
-export interface CampoDataHoraProps
+export interface CampoHorarioProps
   extends Omit<
     React.SelectHTMLAttributes<HTMLInputElement>,
     'value' | 'onChange'
   > {
   value: Date
+  qtdeHorarios: number
   onChange: (value: Date) => void
   label?: string
 }
-export default function CampoHorario(props: CampoDataHoraProps) {
+export default function CampoHorario(props: CampoHorarioProps) {
+  const [horarioHover, setHorarioHover] = useState<string | null>(null)
   const { manha, tardeNoite } = AgendaUtils.horariosDoDia()
+
+  const horarioSelecionado = props.value.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 
   function renderizarHorario(horario: string) {
     return (
       <div
         className={`flex justify-center items-center rounded h-8 bg-zinc-800`}
+        onMouseEnter={() => setHorarioHover(horario)}
+        onMouseLeave={() => setHorarioHover(null)}
       >
         <span>{horario}</span>
       </div>
@@ -24,6 +35,8 @@ export default function CampoHorario(props: CampoDataHoraProps) {
 
   return (
     <div className="flex flex-col gap-3 select-none">
+      <span className="text-white">{horarioHover}</span>
+      <span className="text-white">{horarioSelecionado}</span>
       {props.label && (
         <span className="uppercase text-zinc-400 font-light">
           {props.label}

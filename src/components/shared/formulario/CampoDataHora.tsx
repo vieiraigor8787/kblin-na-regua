@@ -27,6 +27,7 @@ export default function CampoDataHora(props: CampoDataHoraProps) {
         label="Horários disponíveis"
         value={data}
         onChange={props.onChange}
+        qtdeHorarios={4}
       />
     </div>
   )
