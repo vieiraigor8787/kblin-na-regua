@@ -29,7 +29,7 @@ export default function FormularioAgendamento() {
         validarPasso={[!!profissional, servicos.length > 0, !!data]}
       >
         <CampoProfissional
-          label="Profissional"
+          label="Profissionais disponíveis"
           value={profissional}
           onChange={selecionarProfissional}
           className="input"
