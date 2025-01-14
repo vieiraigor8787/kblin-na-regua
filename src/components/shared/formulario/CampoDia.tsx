@@ -29,7 +29,9 @@ export default function CampoDia(props: CampoDataHoraProps) {
             {data.toLocaleDateString('pt-BR', { month: 'short' }).slice(0, 3)}
           </span>
         </div>
-        <div className="uppercase text-xs font-light rounded-full bg-black/10 py-0.5 px-3">
+        <div
+          className={`uppercase text-xs font-light rounded-full bg-black/10 py-0.5 px-3 ${selecionado ? 'bg-black/10' : 'bg-white/10'}`}
+        >
           {data.toLocaleDateString('pt-BR', { weekday: 'short' }).slice(0, 3)}
         </div>
       </div>
