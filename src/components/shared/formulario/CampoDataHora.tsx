@@ -1,4 +1,7 @@
+import { DateUtils } from '@kblinnaregua/core'
+
 import CampoDia from './CampoDia'
+import CampoHorario from './CampoHorario'
 
 export interface CampoDataHoraProps
   extends Omit<
@@ -11,11 +14,18 @@ export interface CampoDataHoraProps
   label?: string
 }
 export default function CampoDataHora(props: CampoDataHoraProps) {
+  const data = props.value ?? DateUtils.hojeComHoraZerada()
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-6">
       <CampoDia
         label="Dias disponíveis"
-        value={props.value ?? new Date()}
+        value={data}
+        onChange={props.onChange}
+      />
+      <CampoHorario
+        label="Horários disponíveis"
+        value={data}
         onChange={props.onChange}
       />
     </div>

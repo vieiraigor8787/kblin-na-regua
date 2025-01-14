@@ -25,11 +25,11 @@ export default function CampoDia(props: CampoDataHoraProps) {
       >
         <div className="flex items-center gap-1">
           <span className="text-2xl font-black">{data.getDate()}</span>
-          <span>
+          <span className="uppercase font-light text-xs">
             {data.toLocaleDateString('pt-BR', { month: 'short' }).slice(0, 3)}
           </span>
         </div>
-        <div className="uppercase">
+        <div className="uppercase text-xs font-light rounded-full bg-black/10 py-0.5 px-3">
           {data.toLocaleDateString('pt-BR', { weekday: 'short' }).slice(0, 3)}
         </div>
       </div>
@@ -37,8 +37,12 @@ export default function CampoDia(props: CampoDataHoraProps) {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden">
-      {props.label && <span>{props.label}</span>}
+    <div className="flex flex-col gap-3 overflow-hidden">
+      {props.label && (
+        <span className="uppercase text-zinc-400 font-light">
+          {props.label}
+        </span>
+      )}
       <div className="flex bg-zinc-900 rounded-lg">
         {DateUtils.proximosDias(7)
           //vai pular o Domingo que é '0'
