@@ -13,6 +13,9 @@ body {
   body {
     @apply bg-gray-950 text-zinc-200;
   }
+  :root {
+    --radius: 0.25rem;
+  }
 }
 
 @layer components {
