@@ -35,7 +35,7 @@ export default function FormularioAgendamento() {
           className="input"
         />
         <CampoServicos
-          label="Serviços"
+          label="Serviços disponíveis"
           value={servicos}
           onChange={selecionarServicos}
           className="input"
