@@ -1,16 +1,18 @@
-import { Profissional } from '@kblinnaregua/core'
+import { Profissional, Servico } from '@kblinnaregua/core'
 import { IconCalendar } from '@tabler/icons-react'
 
 import useAgendamento from '@/data/hooks/useAgendamento'
+import useServicos from '@/data/hooks/useServicos'
 
 export default function Sumario() {
-  const { profissional } = useAgendamento()
+  const { profissional, servicos } = useAgendamento()
 
   return (
     <div className="flex flex-col bg-zinc-900 w-96 rounded-lg">
       {SumarioTitulo()}
       <div className="flex flex-col p-5 gap-6">
         <ProfissionalSelecionado profissional={profissional} />
+        <ServicosSelecionado servicos={servicos} />
       </div>
     </div>
   )
@@ -40,6 +42,30 @@ function ProfissionalSelecionado(props: { profissional: Profissional | null }) {
       <span className="text-sm text-white">
         {props.profissional ? props.profissional.nome : 'Não selecionado'}{' '}
       </span>
+    </div>
+  )
+}
+
+function ServicosSelecionado(props: { servicos: Servico[] }) {
+  function renderizarServico(servico: Servico, i: number) {
+    return (
+      <div
+        key={servico.id}
+        className="flex items-center bg-zinc-700 rounded-lg"
+      >
+        <span className="bg-black/20 py-1.5 px-3">{i}</span>
+        <span className="font-light px-3">{servico.nome}</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="text-xs uppercase text-zinc-300">Serviço(s):</span>
+      <div className="flex flex-wrap gap-2 text-sm text-white rounded-lg">
+        {props.servicos.length === 0 ? 'Nenhum selecionado' : ''}
+        {props.servicos.map((serv, i) => renderizarServico(serv, i + 1))}
+      </div>
     </div>
   )
 }
