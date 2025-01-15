@@ -4,11 +4,17 @@ import { IconCalendar } from '@tabler/icons-react'
 import useAgendamento from '@/data/hooks/useAgendamento'
 
 export default function Sumario() {
-  const { profissional, servicos, duracaoTotal, dataValida, precoTotal } =
-    useAgendamento()
+  const {
+    profissional,
+    servicos,
+    duracaoTotal,
+    dataValida,
+    precoTotal,
+    agendamentoPossivel,
+  } = useAgendamento()
 
   return (
-    <div className="flex flex-col bg-zinc-900 w-96 rounded-lg">
+    <div className="flex flex-col self-start bg-zinc-900 w-96 rounded-lg">
       {SumarioTitulo()}
       <div className="flex flex-col p-5 gap-6">
         <ProfissionalSelecionado profissional={profissional} />
@@ -17,6 +23,14 @@ export default function Sumario() {
         <MostrarData data={dataValida} />
       </div>
       <ValorTotal valor={precoTotal()} />
+      <div className="p-5">
+        <button
+          disabled={!agendamentoPossivel()}
+          className={`button w-full bg-yellow-400 text-black font-semibold ${agendamentoPossivel() ? 'opactity-100' : 'opacity-20 cursor-not-allowed'}`}
+        >
+          Finalizar agendamento
+        </button>
+      </div>
     </div>
   )
 }
@@ -87,7 +101,11 @@ function MostrarData(props: { data: Date | null }) {
     <div className="flex flex-col gap-5">
       <span className="text-xs uppercase text-zinc-300">Data e horário:</span>
       <span className="font-light">
-        {props.data?.toLocaleDateString('pt-BR', { dateStyle: 'long' })}
+        {props.data?.toLocaleDateString('pt-BR', { dateStyle: 'long' }) ?? (
+          <span className="text-sm text-zinc-400 cursor-none">
+            Não selecionado
+          </span>
+        )}
         {props.data ? ' às ' : null}
         {props.data?.toLocaleTimeString('pt-BR')}
       </span>
