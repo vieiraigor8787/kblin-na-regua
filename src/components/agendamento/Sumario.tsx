@@ -1,10 +1,11 @@
-import { Profissional, Servico } from '@kblinnaregua/core'
+import { MoedaUtils, Profissional, Servico } from '@kblinnaregua/core'
 import { IconCalendar } from '@tabler/icons-react'
 
 import useAgendamento from '@/data/hooks/useAgendamento'
 
 export default function Sumario() {
-  const { profissional, servicos, duracaoTotal, dataValida } = useAgendamento()
+  const { profissional, servicos, duracaoTotal, dataValida, precoTotal } =
+    useAgendamento()
 
   return (
     <div className="flex flex-col bg-zinc-900 w-96 rounded-lg">
@@ -15,6 +16,7 @@ export default function Sumario() {
         <DuracaoTotal duracao={duracaoTotal()} />
         <MostrarData data={dataValida} />
       </div>
+      <ValorTotal valor={precoTotal()} />
     </div>
   )
 }
@@ -89,6 +91,15 @@ function MostrarData(props: { data: Date | null }) {
         {props.data ? ' às ' : null}
         {props.data?.toLocaleTimeString('pt-BR')}
       </span>
+    </div>
+  )
+}
+
+function ValorTotal(props: { valor: number }) {
+  return (
+    <div className="flex items-center justify-between gap-3 border-y border-zinc-700 p-5">
+      <span className="text-xs uppercase text-zinc-300">Valor:</span>
+      <span className="font-bold">{MoedaUtils.formatar(props.valor)}</span>
     </div>
   )
 }

@@ -23,6 +23,7 @@ export interface ContextoAgendamentoProps {
   agendar: () => Promise<void>
   agendamentoPossivel: () => boolean
   duracaoTotal: () => string
+  precoTotal: () => number
 }
 
 const ContextoAgendamento = createContext<ContextoAgendamentoProps>({} as any)
@@ -46,6 +47,10 @@ export function ProvedorAgendamento(props: any) {
 
   function duracaoTotal() {
     return AgendaUtils.duracaoTotal(servicos)
+  }
+
+  function precoTotal() {
+    return servicos.reduce((acc, servico) => acc + servico.preco, 0)
   }
 
   async function agendar() {
@@ -83,6 +88,7 @@ export function ProvedorAgendamento(props: any) {
         agendar,
         agendamentoPossivel,
         duracaoTotal,
+        precoTotal,
       }}
     >
       {props.children}
