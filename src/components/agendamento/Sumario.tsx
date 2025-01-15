@@ -11,6 +11,7 @@ export default function Sumario() {
     dataValida,
     precoTotal,
     agendamentoPossivel,
+    agendar,
   } = useAgendamento()
 
   return (
@@ -25,6 +26,7 @@ export default function Sumario() {
       <ValorTotal valor={precoTotal()} />
       <div className="p-5">
         <button
+          onClick={agendar}
           disabled={!agendamentoPossivel()}
           className={`button w-full bg-yellow-400 text-black font-semibold ${agendamentoPossivel() ? 'opactity-100' : 'opacity-20 cursor-not-allowed'}`}
         >
