@@ -1,6 +1,8 @@
 'use client'
 import { cn } from '@/lib/utils'
 import { AgendaUtils } from '@kblinnaregua/core'
+import { IconX } from '@tabler/icons-react'
+import { span } from 'framer-motion/client'
 import { useState } from 'react'
 
 export interface CampoHorarioProps
@@ -32,6 +34,9 @@ export default function CampoHorario(props: CampoHorarioProps) {
   function renderizarHorario(horario: string) {
     const intervalo = obterIntervalodeHorarios(horarioHover, props.qtdeHorarios)
     const destaque = intervalo.includes(horario)
+    const horariosPossiveis = intervalo.length === props.qtdeHorarios
+    const naoSelecionavel =
+      horarioHover && !horariosPossiveis && intervalo.includes(horario)
 
     return (
       <div
@@ -39,12 +44,14 @@ export default function CampoHorario(props: CampoHorarioProps) {
           'flex justify-center items-center rounded h-8 bg-zinc-800',
           {
             'bg-yellow-400 text-black font-semibold': destaque,
+            'bg-red-400 text-black font-semibold cursor-not-allowed':
+              naoSelecionavel,
           }
         )}
         onMouseEnter={() => setHorarioHover(horario)}
         onMouseLeave={() => setHorarioHover(null)}
       >
-        <span>{horario}</span>
+        {naoSelecionavel ? <IconX size={18} /> : <span>{horario}</span>}
       </div>
     )
   }
