@@ -2,7 +2,12 @@
 
 import { createContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { DateUtils, Profissional, Servico } from '@kblinnaregua/core'
+import {
+  AgendaUtils,
+  DateUtils,
+  Profissional,
+  Servico,
+} from '@kblinnaregua/core'
 
 import useAPI from '../hooks/useAPI'
 import useSessao from '../hooks/useSessao'
@@ -16,6 +21,7 @@ export interface ContextoAgendamentoProps {
   selecionarData: (data: Date) => void
   agendar: () => Promise<void>
   agendamentoPossivel: () => boolean
+  duracaoTotal: () => string
 }
 
 const ContextoAgendamento = createContext<ContextoAgendamentoProps>({} as any)
@@ -35,6 +41,10 @@ export function ProvedorAgendamento(props: any) {
     if (!data) return false
 
     return data.getHours() >= 8 && data.getHours() <= 20
+  }
+
+  function duracaoTotal() {
+    return AgendaUtils.duracaoTotal(servicos)
   }
 
   async function agendar() {
@@ -66,6 +76,7 @@ export function ProvedorAgendamento(props: any) {
         selecionarData: setData,
         agendar,
         agendamentoPossivel,
+        duracaoTotal,
       }}
     >
       {props.children}

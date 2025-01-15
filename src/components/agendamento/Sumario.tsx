@@ -2,10 +2,9 @@ import { Profissional, Servico } from '@kblinnaregua/core'
 import { IconCalendar } from '@tabler/icons-react'
 
 import useAgendamento from '@/data/hooks/useAgendamento'
-import useServicos from '@/data/hooks/useServicos'
 
 export default function Sumario() {
-  const { profissional, servicos } = useAgendamento()
+  const { profissional, servicos, duracaoTotal } = useAgendamento()
 
   return (
     <div className="flex flex-col bg-zinc-900 w-96 rounded-lg">
@@ -13,7 +12,9 @@ export default function Sumario() {
       <div className="flex flex-col p-5 gap-6">
         <ProfissionalSelecionado profissional={profissional} />
         <ServicosSelecionado servicos={servicos} />
+        <DuracaoTotal duracao={duracaoTotal()} />
       </div>
+      <div className=""></div>
     </div>
   )
 }
@@ -66,6 +67,15 @@ function ServicosSelecionado(props: { servicos: Servico[] }) {
         {props.servicos.length === 0 ? 'Nenhum selecionado' : ''}
         {props.servicos.map((serv, i) => renderizarServico(serv, i + 1))}
       </div>
+    </div>
+  )
+}
+
+function DuracaoTotal(props: { duracao: string }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="text-xs uppercase text-zinc-300">Duração</span>
+      <span className="text-sm">{props.duracao}</span>
     </div>
   )
 }
