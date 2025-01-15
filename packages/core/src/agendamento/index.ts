@@ -4,6 +4,7 @@ import BuscarAgendamentosCliente from './service/BuscarAgendamentosCliente'
 import BuscarAgendaProfissionalPorDia from './service/BuscarAgendaProfissionalPorDia'
 import ExcluirAgendamento from './service/ExcluirAgendamento'
 import NovoAgendamento from './service/NovoAgendamento'
+import ObterHorariosOcupados from './service/ObterHorariosOcupados'
 
 export type { Agendamento, RepositorioAgendamento }
 export {
@@ -11,4 +12,5 @@ export {
   BuscarAgendaProfissionalPorDia,
   ExcluirAgendamento,
   NovoAgendamento,
+  ObterHorariosOcupados,
 }
