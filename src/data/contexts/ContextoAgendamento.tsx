@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   AgendaUtils,
@@ -29,13 +29,14 @@ export interface ContextoAgendamentoProps {
 const ContextoAgendamento = createContext<ContextoAgendamentoProps>({} as any)
 
 export function ProvedorAgendamento(props: any) {
-  const { httpPost } = useAPI()
+  const { httpPost, httpGet } = useAPI()
   const { usuario } = useSessao()
   const router = useRouter()
 
   const [profissional, setProfissional] = useState<Profissional | null>(null)
   const [servicos, setServicos] = useState<Servico[]>([])
   const [data, setData] = useState<Date | null>(null)
+  const [horariosOcupados, setHorariosOcupados] = useState<string[]>([])
 
   function agendamentoPossivel() {
     if (!profissional) return false
@@ -70,6 +71,24 @@ export function ProvedorAgendamento(props: any) {
     setServicos([])
     setData(DateUtils.hojeComHoraZerada())
   }
+
+  const obterHorariosOcupados = useCallback(
+    async function (data: Date, profissional: Profissional): Promise<string[]> {
+      if (!data || !profissional) return []
+
+      const dtString = data.toISOString().slice(0, 10)
+      const ocupacao = await httpGet(
+        `/agendamentos/ocupacao/${profissional}/${dtString}`
+      )
+      return ocupacao ?? []
+    },
+    [httpGet]
+  )
+
+  useEffect(() => {
+    if (!data || !profissional) return
+    obterHorariosOcupados(data, profissional).then(setHorariosOcupados)
+  }, [data, profissional, obterHorariosOcupados])
 
   return (
     <ContextoAgendamento.Provider
