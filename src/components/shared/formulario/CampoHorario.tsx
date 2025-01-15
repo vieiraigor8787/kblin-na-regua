@@ -1,4 +1,5 @@
 'use client'
+import { cn } from '@/lib/utils'
 import { AgendaUtils } from '@kblinnaregua/core'
 import { useState } from 'react'
 
@@ -29,9 +30,17 @@ export default function CampoHorario(props: CampoHorarioProps) {
   }
 
   function renderizarHorario(horario: string) {
+    const intervalo = obterIntervalodeHorarios(horarioHover, props.qtdeHorarios)
+    const destaque = intervalo.includes(horario)
+
     return (
       <div
-        className={`flex justify-center items-center rounded h-8 bg-zinc-800`}
+        className={cn(
+          'flex justify-center items-center rounded h-8 bg-zinc-800',
+          {
+            'bg-yellow-400 text-black font-semibold': destaque,
+          }
+        )}
         onMouseEnter={() => setHorarioHover(horario)}
         onMouseLeave={() => setHorarioHover(null)}
       >
@@ -42,11 +51,6 @@ export default function CampoHorario(props: CampoHorarioProps) {
 
   return (
     <div className="flex flex-col gap-3 select-none">
-      <span className="text-white">{horarioHover}</span>
-      <span className="text-white">{horarioSelecionado}</span>
-      <span className="text-white">
-        {obterIntervalodeHorarios(horarioHover, props.qtdeHorarios).join(' - ')}
-      </span>
       {props.label && (
         <span className="uppercase text-zinc-400 font-light">
           {props.label}
