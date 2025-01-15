@@ -1,5 +1,13 @@
 export default class MoedaUtils {
-  static formatar(valor: number, simbolo: string = 'R$'): string {
-    return `${simbolo} ${valor.toFixed(2).replace('.', ',')}`
+  static formatar(
+    valor: number,
+    locale: string = 'pt-BR',
+    moeda: string = 'BRL'
+  ): string {
+    return Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: moeda,
+      minimumFractionDigits: 2,
+    }).format(valor)
   }
 }
