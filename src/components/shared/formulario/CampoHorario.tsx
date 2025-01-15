@@ -21,6 +21,13 @@ export default function CampoHorario(props: CampoHorarioProps) {
     minute: '2-digit',
   })
 
+  function obterIntervalodeHorarios(horario: string | null, qtde: number) {
+    if (!horario) return []
+    const horarios = manha.includes(horario) ? manha : tardeNoite
+    const index = horarios.indexOf(horario)
+    return horarios.slice(index, index + qtde)
+  }
+
   function renderizarHorario(horario: string) {
     return (
       <div
@@ -37,6 +44,9 @@ export default function CampoHorario(props: CampoHorarioProps) {
     <div className="flex flex-col gap-3 select-none">
       <span className="text-white">{horarioHover}</span>
       <span className="text-white">{horarioSelecionado}</span>
+      <span className="text-white">
+        {obterIntervalodeHorarios(horarioHover, props.qtdeHorarios).join(' - ')}
+      </span>
       {props.label && (
         <span className="uppercase text-zinc-400 font-light">
           {props.label}
