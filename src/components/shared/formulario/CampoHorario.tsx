@@ -31,11 +31,22 @@ export default function CampoHorario(props: CampoHorarioProps) {
   }
 
   function renderizarHorario(horario: string) {
-    const intervalo = obterIntervalodeHorarios(horarioHover, props.qtdeHorarios)
-    const destaque = intervalo.includes(horario)
-    const horariosPossiveis = intervalo.length === props.qtdeHorarios
+    const intervaloHover = obterIntervalodeHorarios(
+      horarioHover,
+      props.qtdeHorarios
+    )
+    const destaque = intervaloHover.includes(horario)
+    const horariosPossiveis = intervaloHover.length === props.qtdeHorarios
     const naoSelecionavel =
-      horarioHover && !horariosPossiveis && intervalo.includes(horario)
+      horarioHover && !horariosPossiveis && intervaloHover.includes(horario)
+
+    const intervaloSelecionado = obterIntervalodeHorarios(
+      horarioSelecionado,
+      props.qtdeHorarios
+    )
+    const selecionado =
+      intervaloSelecionado.length === props.qtdeHorarios &&
+      intervaloSelecionado.includes(horario)
 
     return (
       <div
@@ -45,6 +56,8 @@ export default function CampoHorario(props: CampoHorarioProps) {
             'bg-yellow-400 text-black font-semibold': destaque,
             'bg-red-400 text-black font-semibold cursor-not-allowed':
               naoSelecionavel,
+            'bg-green-400 text-black font-semibold cursor-not-allowed':
+              selecionado,
           }
         )}
         onMouseEnter={() => setHorarioHover(horario)}
