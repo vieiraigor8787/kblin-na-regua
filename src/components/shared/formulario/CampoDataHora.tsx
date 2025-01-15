@@ -18,6 +18,10 @@ export default function CampoDataHora(props: CampoDataHoraProps) {
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex gap-2">
+        <span>{data.toLocaleDateString('pt-BR')}</span>
+        <span>{data.toLocaleTimeString('pt-BR')}</span>
+      </div>
       <CampoDia
         label="Dias disponíveis"
         value={data}

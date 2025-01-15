@@ -1,8 +1,7 @@
 'use client'
 import { cn } from '@/lib/utils'
-import { AgendaUtils } from '@kblinnaregua/core'
+import { AgendaUtils, DateUtils } from '@kblinnaregua/core'
 import { IconX } from '@tabler/icons-react'
-import { span } from 'framer-motion/client'
 import { useState } from 'react'
 
 export interface CampoHorarioProps
@@ -50,6 +49,11 @@ export default function CampoHorario(props: CampoHorarioProps) {
         )}
         onMouseEnter={() => setHorarioHover(horario)}
         onMouseLeave={() => setHorarioHover(null)}
+        onClick={() => {
+          if (naoSelecionavel) return
+
+          props.onChange(DateUtils.aplicarHorario(props.value, horario))
+        }}
       >
         {naoSelecionavel ? <IconX size={18} /> : <span>{horario}</span>}
       </div>
