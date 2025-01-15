@@ -14,6 +14,7 @@ export default function FormularioAgendamento() {
     selecionarProfissional,
     selecionarData,
     data,
+    agendamentoPossivel,
   } = useAgendamento()
 
   return (
@@ -26,7 +27,11 @@ export default function FormularioAgendamento() {
         ]}
         acao={agendar}
         labelAcao="Agendar"
-        validarPasso={[!!profissional, servicos.length > 0, !!data]}
+        validarPasso={[
+          !!profissional,
+          servicos.length > 0,
+          agendamentoPossivel(),
+        ]}
       >
         <CampoProfissional
           label="Profissionais disponíveis"

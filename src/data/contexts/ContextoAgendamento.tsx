@@ -1,7 +1,8 @@
 'use client'
 
 import { createContext, useState } from 'react'
-import { Profissional, Servico } from '@kblinnaregua/core'
+import { useRouter } from 'next/navigation'
+import { DateUtils, Profissional, Servico } from '@kblinnaregua/core'
 
 import useAPI from '../hooks/useAPI'
 import useSessao from '../hooks/useSessao'
@@ -14,6 +15,7 @@ export interface ContextoAgendamentoProps {
   selecionarServicos: (servico: Servico[]) => void
   selecionarData: (data: Date) => void
   agendar: () => Promise<void>
+  agendamentoPossivel: () => boolean
 }
 
 const ContextoAgendamento = createContext<ContextoAgendamentoProps>({} as any)
@@ -21,10 +23,19 @@ const ContextoAgendamento = createContext<ContextoAgendamentoProps>({} as any)
 export function ProvedorAgendamento(props: any) {
   const { httpPost } = useAPI()
   const { usuario } = useSessao()
+  const router = useRouter()
 
   const [profissional, setProfissional] = useState<Profissional | null>(null)
   const [servicos, setServicos] = useState<Servico[]>([])
   const [data, setData] = useState<Date | null>(null)
+
+  function agendamentoPossivel() {
+    if (!profissional) return false
+    if (servicos.length === 0) return false
+    if (!data) return false
+
+    return data.getHours() >= 8 && data.getHours() <= 20
+  }
 
   async function agendar() {
     await httpPost('/agendamentos', {
@@ -33,6 +44,15 @@ export function ProvedorAgendamento(props: any) {
       profissional,
       servicos,
     })
+
+    router.push('/agendamento/sucesso')
+    limpar()
+  }
+
+  function limpar() {
+    setProfissional(null)
+    setServicos([])
+    setData(DateUtils.hojeComHoraZerada())
   }
 
   return (
@@ -45,6 +65,7 @@ export function ProvedorAgendamento(props: any) {
         selecionarServicos: setServicos,
         selecionarData: setData,
         agendar,
+        agendamentoPossivel,
       }}
     >
       {props.children}

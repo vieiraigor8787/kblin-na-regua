@@ -85,7 +85,7 @@ export default function Passos({
             className={`flex gap-1 items-center button bg-yellow-500 text-black ${!permiteProximoPasso ? 'cursor-not-allowed opacity-50' : ''}  `}
           >
             <IconCheck size={20} />
-            <span>{labelAcao ?? 'Finalizar'}</span>
+            <span className="font-semibold">{labelAcao ?? 'Finalizar'}</span>
           </button>
         ) : (
           <button
