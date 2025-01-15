@@ -65,7 +65,7 @@ export default function Passos({
   const permiteProximoPasso = validarPasso?.[passoAtual] ?? true
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex-1 flex flex-col gap-5">
       <div>{renderizarLabels()}</div>
       <div className="">{children[passoAtual] ?? children}</div>
       <div className="flex gap-3">

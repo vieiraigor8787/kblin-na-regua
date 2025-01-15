@@ -4,6 +4,7 @@ import CampoProfissional from '../profissional/CampoProfissional'
 import CampoServicos from '../servico/CampoServicos'
 import CampoDataHora from '../shared/formulario/CampoDataHora'
 import Passos from '../shared/Passos'
+import Sumario from './Sumario'
 
 export default function FormularioAgendamento() {
   const {
@@ -18,7 +19,7 @@ export default function FormularioAgendamento() {
   } = useAgendamento()
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex gap-10">
       <Passos
         labels={[
           'Selecione o Profissional',
@@ -52,6 +53,7 @@ export default function FormularioAgendamento() {
           apenasFuturo
         />
       </Passos>
+      <Sumario />
     </div>
   )
 }
