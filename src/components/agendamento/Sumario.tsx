@@ -4,7 +4,7 @@ import { IconCalendar } from '@tabler/icons-react'
 import useAgendamento from '@/data/hooks/useAgendamento'
 
 export default function Sumario() {
-  const { profissional, servicos, duracaoTotal } = useAgendamento()
+  const { profissional, servicos, duracaoTotal, dataValida } = useAgendamento()
 
   return (
     <div className="flex flex-col bg-zinc-900 w-96 rounded-lg">
@@ -13,8 +13,8 @@ export default function Sumario() {
         <ProfissionalSelecionado profissional={profissional} />
         <ServicosSelecionado servicos={servicos} />
         <DuracaoTotal duracao={duracaoTotal()} />
+        <MostrarData data={dataValida} />
       </div>
-      <div className=""></div>
     </div>
   )
 }
@@ -75,7 +75,20 @@ function DuracaoTotal(props: { duracao: string }) {
   return (
     <div className="flex flex-col gap-2">
       <span className="text-xs uppercase text-zinc-300">Duração</span>
-      <span className="text-sm">{props.duracao}</span>
+      <span className="">{props.duracao}</span>
+    </div>
+  )
+}
+
+function MostrarData(props: { data: Date | null }) {
+  return (
+    <div className="flex flex-col gap-5">
+      <span className="text-xs uppercase text-zinc-300">Data e horário:</span>
+      <span className="font-light">
+        {props.data?.toLocaleDateString('pt-BR', { dateStyle: 'long' })}
+        {props.data ? ' às ' : null}
+        {props.data?.toLocaleTimeString('pt-BR')}
+      </span>
     </div>
   )
 }

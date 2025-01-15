@@ -16,6 +16,7 @@ export interface ContextoAgendamentoProps {
   profissional: Profissional | null
   servicos: Servico[]
   data: Date | null
+  dataValida: Date | null
   selecionarProfissional: (profissional: Profissional | null) => void
   selecionarServicos: (servico: Servico[]) => void
   selecionarData: (data: Date) => void
@@ -71,6 +72,11 @@ export function ProvedorAgendamento(props: any) {
         profissional,
         servicos,
         data,
+        get dataValida() {
+          if (!data) return null
+          if (data.getHours() < 8 || data.getHours() > 20) return null
+          return data
+        },
         selecionarProfissional: setProfissional,
         selecionarServicos: setServicos,
         selecionarData: setData,
