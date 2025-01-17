@@ -9,9 +9,9 @@ export interface CampoDataHoraProps
     'value' | 'onChange'
   > {
   value: Date | null
+  qtdeHorarios: number
+  horariosOcupados: string[]
   onChange: (value: Date) => void
-  apenasFuturo?: boolean
-  label?: string
 }
 export default function CampoDataHora(props: CampoDataHoraProps) {
   const data = props.value ?? DateUtils.hojeComHoraZerada()
@@ -27,7 +27,8 @@ export default function CampoDataHora(props: CampoDataHoraProps) {
         label="Horários disponíveis"
         value={data}
         onChange={props.onChange}
-        qtdeHorarios={4}
+        qtdeHorarios={props.qtdeHorarios}
+        horariosOcupados={props.horariosOcupados}
       />
     </div>
   )

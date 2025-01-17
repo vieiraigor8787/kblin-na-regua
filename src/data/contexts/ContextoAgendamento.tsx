@@ -17,6 +17,7 @@ export interface ContextoAgendamentoProps {
   servicos: Servico[]
   data: Date | null
   dataValida: Date | null
+  horariosOcupados: string[]
   selecionarProfissional: (profissional: Profissional | null) => void
   selecionarServicos: (servico: Servico[]) => void
   selecionarData: (data: Date) => void
@@ -24,6 +25,7 @@ export interface ContextoAgendamentoProps {
   agendamentoPossivel: () => boolean
   duracaoTotal: () => string
   precoTotal: () => number
+  qtdeHorarios: () => number
 }
 
 const ContextoAgendamento = createContext<ContextoAgendamentoProps>({} as any)
@@ -52,6 +54,10 @@ export function ProvedorAgendamento(props: any) {
 
   function precoTotal() {
     return servicos.reduce((acc, servico) => acc + servico.preco, 0)
+  }
+
+  function qtdeHorarios() {
+    return servicos.reduce((qtde, servico) => qtde + servico.qtdeSlots, 0)
   }
 
   async function agendar() {
@@ -101,6 +107,7 @@ export function ProvedorAgendamento(props: any) {
           if (data.getHours() < 8 || data.getHours() > 20) return null
           return data
         },
+        horariosOcupados,
         selecionarProfissional: setProfissional,
         selecionarServicos: setServicos,
         selecionarData: setData,
@@ -108,6 +115,7 @@ export function ProvedorAgendamento(props: any) {
         agendamentoPossivel,
         duracaoTotal,
         precoTotal,
+        qtdeHorarios,
       }}
     >
       {props.children}

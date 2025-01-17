@@ -16,6 +16,8 @@ export default function FormularioAgendamento() {
     selecionarData,
     data,
     agendamentoPossivel,
+    qtdeHorarios,
+    horariosOcupados,
   } = useAgendamento()
 
   return (
@@ -47,10 +49,10 @@ export default function FormularioAgendamento() {
           className="input"
         />
         <CampoDataHora
-          label="Data e hora"
           value={data}
           onChange={selecionarData}
-          apenasFuturo
+          qtdeHorarios={qtdeHorarios()}
+          horariosOcupados={horariosOcupados}
         />
       </Passos>
       <Sumario />
