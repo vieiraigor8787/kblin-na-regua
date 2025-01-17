@@ -53,6 +53,7 @@ export default function FormularioAgendamento() {
           onChange={selecionarData}
           qtdeHorarios={qtdeHorarios()}
           horariosOcupados={horariosOcupados}
+          className="input"
         />
       </Passos>
       <Sumario />

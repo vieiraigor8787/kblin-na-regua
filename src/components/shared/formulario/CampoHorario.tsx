@@ -11,6 +11,7 @@ export interface CampoHorarioProps
   > {
   value: Date
   qtdeHorarios: number
+  horariosOcupados: string[]
   onChange: (value: Date) => void
   label?: string
 }
@@ -35,8 +36,11 @@ export default function CampoHorario(props: CampoHorarioProps) {
       horarioHover,
       props.qtdeHorarios
     )
+
     const destaque = intervaloHover.includes(horario)
+
     const horariosPossiveis = intervaloHover.length === props.qtdeHorarios
+
     const naoSelecionavel =
       horarioHover && !horariosPossiveis && intervaloHover.includes(horario)
 
@@ -44,9 +48,15 @@ export default function CampoHorario(props: CampoHorarioProps) {
       horarioSelecionado,
       props.qtdeHorarios
     )
+
     const selecionado =
       intervaloSelecionado.length === props.qtdeHorarios &&
       intervaloSelecionado.includes(horario)
+
+    const intervaloHoverOcupado =
+      intervaloHover.includes(horario) &&
+      intervaloHover.some((h) => props.horariosOcupados.includes(h))
+    const horarioOcupado = props.horariosOcupados.includes(horario)
 
     return (
       <div
@@ -54,8 +64,8 @@ export default function CampoHorario(props: CampoHorarioProps) {
           'flex justify-center items-center rounded h-8 bg-zinc-800',
           {
             'bg-yellow-400 text-black font-semibold': destaque,
-            'bg-red-400 text-black font-semibold cursor-not-allowed':
-              naoSelecionavel,
+            'bg-red-500 text-black font-semibold cursor-not-allowed':
+              naoSelecionavel || intervaloHoverOcupado,
             'bg-green-400 text-black font-semibold cursor-not-allowed':
               selecionado,
           }
@@ -63,12 +73,16 @@ export default function CampoHorario(props: CampoHorarioProps) {
         onMouseEnter={() => setHorarioHover(horario)}
         onMouseLeave={() => setHorarioHover(null)}
         onClick={() => {
-          if (naoSelecionavel) return
+          if (naoSelecionavel || intervaloHoverOcupado) return
 
           props.onChange(DateUtils.aplicarHorario(props.value, horario))
         }}
       >
-        {naoSelecionavel ? <IconX size={18} /> : <span>{horario}</span>}
+        {naoSelecionavel || horarioOcupado ? (
+          <IconX size={18} />
+        ) : (
+          <span>{horario}</span>
+        )}
       </div>
     )
   }

@@ -84,7 +84,7 @@ export function ProvedorAgendamento(props: any) {
 
       const dtString = data.toISOString().slice(0, 10)
       const ocupacao = await httpGet(
-        `/agendamentos/ocupacao/${profissional}/${dtString}`
+        `/agendamentos/ocupacao/${profissional!.id}/${dtString}`
       )
       return ocupacao ?? []
     },
