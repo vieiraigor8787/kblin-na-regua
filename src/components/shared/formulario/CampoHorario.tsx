@@ -1,6 +1,6 @@
 'use client'
 import { cn } from '@/lib/utils'
-import { AgendaUtils, DateUtils } from '@kblinnaregua/core'
+import { AgendaUtils, DateUtils, Horarios } from '@kblinnaregua/core'
 import { IconX } from '@tabler/icons-react'
 import { useState } from 'react'
 
@@ -24,39 +24,25 @@ export default function CampoHorario(props: CampoHorarioProps) {
     minute: '2-digit',
   })
 
-  function obterIntervalodeHorarios(horario: string | null, qtde: number) {
-    if (!horario) return []
-    const horarios = manha.includes(horario) ? manha : tardeNoite
-    const index = horarios.indexOf(horario)
-    return horarios.slice(index, index + qtde)
-  }
-
   function renderizarHorario(horario: string) {
-    const intervaloHover = obterIntervalodeHorarios(
-      horarioHover,
-      props.qtdeHorarios
+    const horariosHover = new Horarios(
+      horarioHover!,
+      props.qtdeHorarios,
+      props.horariosOcupados
     )
-
-    const destaque = intervaloHover.includes(horario)
-
-    const horariosPossiveis = intervaloHover.length === props.qtdeHorarios
-
-    const naoSelecionavel =
-      horarioHover && !horariosPossiveis && intervaloHover.includes(horario)
-
-    const intervaloSelecionado = obterIntervalodeHorarios(
+    const horariosSelecionados = new Horarios(
       horarioSelecionado,
-      props.qtdeHorarios
+      props.qtdeHorarios,
+      props.horariosOcupados
     )
 
     const selecionado =
-      intervaloSelecionado.length === props.qtdeHorarios &&
-      intervaloSelecionado.includes(horario)
+      horariosSelecionados.todos.includes(horario) &&
+      horariosSelecionados.completo
+    const destaque = horariosHover.todos.includes(horario)
 
-    const intervaloHoverOcupado =
-      intervaloHover.includes(horario) &&
-      intervaloHover.some((h) => props.horariosOcupados.includes(h))
-    const horarioOcupado = props.horariosOcupados.includes(horario)
+    const impossibilitado =
+      destaque && (horariosHover.ocupado || horariosHover.incompleto)
 
     return (
       <div
@@ -65,7 +51,7 @@ export default function CampoHorario(props: CampoHorarioProps) {
           {
             'bg-yellow-400 text-black font-semibold': destaque,
             'bg-red-500 text-black font-semibold cursor-not-allowed':
-              naoSelecionavel || intervaloHoverOcupado,
+              impossibilitado,
             'bg-green-400 text-black font-semibold cursor-not-allowed':
               selecionado,
           }
@@ -73,12 +59,12 @@ export default function CampoHorario(props: CampoHorarioProps) {
         onMouseEnter={() => setHorarioHover(horario)}
         onMouseLeave={() => setHorarioHover(null)}
         onClick={() => {
-          if (naoSelecionavel || intervaloHoverOcupado) return
+          if (impossibilitado) return
 
           props.onChange(DateUtils.aplicarHorario(props.value, horario))
         }}
       >
-        {naoSelecionavel || horarioOcupado ? (
+        {props.horariosOcupados.includes(horario) ? (
           <IconX size={18} />
         ) : (
           <span>{horario}</span>
