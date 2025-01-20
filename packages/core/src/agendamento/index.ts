@@ -1,4 +1,5 @@
 import Agendamento from './model/Agendamento'
+import Horarios from './model/Horarios'
 import RepositorioAgendamento from './provider/RepositorioAgendamento'
 import BuscarAgendamentosCliente from './service/BuscarAgendamentosCliente'
 import BuscarAgendaProfissionalPorDia from './service/BuscarAgendaProfissionalPorDia'
@@ -13,4 +14,5 @@ export {
   ExcluirAgendamento,
   NovoAgendamento,
   ObterHorariosOcupados,
+  Horarios,
 }
