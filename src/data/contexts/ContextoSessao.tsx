@@ -14,7 +14,7 @@ interface ContextoSessaoProps {
   carregando: boolean
   token: string | null
   usuario: Usuario | null
-  iniciarSessao: (token: string) => void
+  iniciarSessao: (jwt: string) => void
   encerrarSessao: () => void
 }
 
@@ -44,10 +44,9 @@ export function ProvedorSessao(props: any) {
     [carregarSessao]
   )
 
-  function iniciarSessao(token: string) {
-    cookie.set(nomeCookie, token, { expires: 1 })
-    const sessao = obterSessao()
-    setSessao(sessao)
+  function iniciarSessao(jwt: string) {
+    cookie.set(nomeCookie, jwt, { expires: 1, sameSite: 'None', secure: true })
+    carregarSessao()
   }
 
   function encerrarSessao() {
@@ -56,9 +55,9 @@ export function ProvedorSessao(props: any) {
   }
 
   function obterSessao(): Sessao {
-    const token = cookie.get(nomeCookie)
+    const jwt = cookie.get(nomeCookie)
 
-    if (!token) {
+    if (!jwt) {
       return {
         token: null,
         usuario: null,
@@ -66,10 +65,11 @@ export function ProvedorSessao(props: any) {
     }
 
     try {
-      const payload: any = jwtDecode(token)
-      const valido = payload.exp! > Date.now() / 1000
+      const payload: any = jwtDecode(jwt)
+      const expired = payload.exp! > Date.now() / 1000
 
-      if (!valido) {
+      if (expired) {
+        cookie.remove(nomeCookie)
         return {
           token: null,
           usuario: null,
@@ -77,7 +77,7 @@ export function ProvedorSessao(props: any) {
       }
 
       return {
-        token,
+        token: jwt,
         usuario: {
           id: payload.id,
           nome: payload.nome,
@@ -87,6 +87,7 @@ export function ProvedorSessao(props: any) {
         },
       }
     } catch (e) {
+      cookie.remove(nomeCookie)
       return { token: null, usuario: null }
     }
   }
