@@ -1,5 +1,5 @@
 import ForcarAutenticacao from '@/components/shared/ForcarAutenticacao'
-import Pagina from '@/components/shared/formulario/Pagina'
+import Pagina from '@/components/shared/Pagina'
 
 export default function Layout(props: any) {
   return (

@@ -1,4 +1,4 @@
-import Rodape from '../Rodape'
+import Rodape from './Rodape'
 
 export interface PaginaProps {
   children: any
