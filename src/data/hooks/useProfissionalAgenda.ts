@@ -6,7 +6,7 @@ import useAPI from './useAPI'
 
 export default function useProfissionalAgenda() {
   const { usuario } = useSessao()
-  const { httpGet } = useAPI()
+  const { httpGet, httpDelete } = useAPI()
   const [data, setData] = useState<Date>(new Date())
   const [agendamentos, setAgendamentos] = useState<Agendamento[]>([])
 
@@ -21,4 +21,16 @@ export default function useProfissionalAgenda() {
   useEffect(() => {
     carregarAgendamentos()
   }, [carregarAgendamentos])
+
+  async function excluirAgendamento(id: number) {
+    await httpDelete(`agendamentos/${id}`)
+    setAgendamentos(agendamentos.filter((a) => a.id !== id))
+  }
+
+  return {
+    data,
+    setData,
+    alterarData: setData,
+    excluirAgendamento,
+  }
 }

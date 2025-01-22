@@ -43,5 +43,18 @@ export default function useAPI() {
     }
   }
 
-  return { httpGet, httpPost }
+  async function httpDelete(path: string) {
+    const uri = path.startsWith('/') ? path : `/${path}`
+    const urlFull = `${urlBase}${uri}`
+    const res = await fetch(urlFull, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return extrairDados(res)
+  }
+
+  return { httpGet, httpPost, httpDelete }
 }
