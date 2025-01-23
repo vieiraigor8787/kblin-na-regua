@@ -27,6 +27,17 @@ export default class DateUtils {
     novaData.setHours(hora, min, 0, 0)
     return novaData
   }
+
+  static formatarDataEHora(data: Date): string {
+    return data.toLocaleDateString('pt-BR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+  }
 }
 
 // console.log(DateUtils.proximosDias(7, false))
