@@ -29,7 +29,7 @@ export default function useProfissionalAgenda() {
 
   return {
     data,
-    setData,
+    agendamentos,
     alterarData: setData,
     excluirAgendamento,
   }

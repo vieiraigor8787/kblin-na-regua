@@ -37,13 +37,6 @@ export function ProvedorSessao(props: any) {
     }
   }, [])
 
-  useEffect(
-    function () {
-      carregarSessao()
-    },
-    [carregarSessao]
-  )
-
   function iniciarSessao(jwt: string) {
     cookie.set(nomeCookie, jwt, { expires: 1, sameSite: 'None', secure: true })
     carregarSessao()
@@ -66,7 +59,7 @@ export function ProvedorSessao(props: any) {
 
     try {
       const payload: any = jwtDecode(jwt)
-      const expired = payload.exp! > Date.now() / 1000
+      const expired = payload.exp! < Date.now() / 1000
 
       if (expired) {
         cookie.remove(nomeCookie)
@@ -91,6 +84,10 @@ export function ProvedorSessao(props: any) {
       return { token: null, usuario: null }
     }
   }
+
+  useEffect(() => {
+    carregarSessao()
+  }, [carregarSessao])
 
   return (
     <ContextoSessao.Provider
